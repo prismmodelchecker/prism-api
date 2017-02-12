@@ -2,6 +2,8 @@
 
 This repo contains example code for connecting to PRISM programmatically.
 You will need to separately download a copy of PRISM to connect to.
+Instructions are given below for building/running the code.
+Browse the example classes in the ``src`` directory to see the example code itself.
 
 ## Basic instructions
 
@@ -36,8 +38,9 @@ You can change this as follows:
 
 * ``PRISM_MAINCLASS=demos.AnotherTest bin/run.sh``
 
-Have a look at the ``run.sh`` script to see what is needed to connect to PRISM
-from your own codes/software. Essentially you need to:
+You can create your own code in the ``src`` directory and then compile/run it as above..
+Or, have a look at the ``run.sh`` script to see what is needed to connect to PRISM
+from your own separate code/software. Essentially you need to:
 
 * set up the Java classpath to include PRISM's classes
   (from the ``classes`` directory and/or jars in the ``lib directory`` of a distribution)
