@@ -38,7 +38,7 @@ You can change this as follows:
 
 * ``PRISM_MAINCLASS=demos.AnotherTest bin/run.sh``
 
-You can create your own code in the ``src`` directory and then compile/run it as above..
+You can create your own code in the ``src`` directory and then compile/run it as above.
 Or, have a look at the ``run.sh`` script to see what is needed to connect to PRISM
 from your own separate code/software. Essentially you need to:
 
