@@ -1,0 +1,10 @@
+const int x;
+
+// Probability of throwing 6?
+P=? [ F s=7 & d=6 ]
+
+// Probability of throwing x?
+P=? [ F s=7 & d=x ]
+
+// Expected number of coin flips to complete?
+R=? [ F s=7 ]
