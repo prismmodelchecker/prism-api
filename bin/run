@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# PRISM directory to link to
+if [ "$PRISM_DIR" = "" ]; then
+	PRISM_DIR="../prism"
+fi
+
+# Class to run
+if [ "$PRISM_MAINCLASS" = "" ]; then
+	PRISM_MAINCLASS=demos.ModelCheckFromFiles
+fi
+
+# Set up CLASSPATH:
+PRISM_CLASSPATH=classes:"$PRISM_DIR"/lib/prism.jar:"$PRISM_DIR"/classes:"$PRISM_DIR":"$PRISM_DIR"/lib/*
+
+# Set up pointers to libraries
+PRISM_LIB_PATH="$PRISM_DIR"/lib
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	export DYLD_LIBRARY_PATH="$PRISM_LIB_PATH"
+else
+	export LD_LIBRARY_PATH="$PRISM_LIB_PATH"
+fi
+
+# Command to launch Java
+if [ "$PRISM_JAVA" = "" ]; then
+	# On OS X, we want to avoiding calling java from the /usr/bin link
+	# since it causes problems with dynamic linking (DYLD_LIBRARY_PATH)
+	if [ -x /usr/libexec/java_home ]; then
+		PRISM_JAVA=`/usr/libexec/java_home`"/bin/java"
+	else
+		PRISM_JAVA=java
+	fi
+fi
+
+# Run PRISM through Java
+"$PRISM_JAVA" -Djava.library.path="$PRISM_LIB_PATH" -classpath "$PRISM_CLASSPATH" $PRISM_MAINCLASS "$@"
