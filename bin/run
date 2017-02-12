@@ -11,10 +11,13 @@ if [ "$PRISM_MAINCLASS" = "" ]; then
 fi
 
 # Set up CLASSPATH:
-PRISM_CLASSPATH=classes:"$PRISM_DIR"/lib/prism.jar:"$PRISM_DIR"/classes:"$PRISM_DIR":"$PRISM_DIR"/lib/*
+# We look in both the top-level and the prism sub-directory
+# (currently svn/git repos and downloaded distributions differ in structure)
+PRISM_CLASSPATH=classes:"$PRISM_DIR"/classes:"$PRISM_DIR"/lib/*:"$PRISM_DIR"/prism/classes:"$PRISM_DIR"/prism/lib/*
 
 # Set up pointers to libraries
-PRISM_LIB_PATH="$PRISM_DIR"/lib
+# As above, we look in both the top-level and the prism sub-directory
+PRISM_LIB_PATH="$PRISM_DIR"/lib:"$PRISM_DIR"/prism/lib
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	export DYLD_LIBRARY_PATH="$PRISM_LIB_PATH"
 else
