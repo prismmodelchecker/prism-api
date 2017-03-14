@@ -13,7 +13,7 @@ fi
 # Set up CLASSPATH:
 # We look in both the top-level and the prism sub-directory
 # (currently svn/git repos and downloaded distributions differ in structure)
-PRISM_CLASSPATH=classes:"$PRISM_DIR"/classes:"$PRISM_DIR"/lib/*:"$PRISM_DIR"/prism/classes:"$PRISM_DIR"/prism/lib/*
+PRISM_CLASSPATH=classes:"$PRISM_DIR":"$PRISM_DIR"/classes:"$PRISM_DIR"/lib/*:"$PRISM_DIR"/prism:"$PRISM_DIR"/prism/classes:"$PRISM_DIR"/prism/lib/*
 
 # Set up pointers to libraries
 # As above, we look in both the top-level and the prism sub-directory
