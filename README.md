@@ -28,18 +28,18 @@ If you want to use a PRISM distribution located elsewhere, build like this:
 
 * ``make PRISM_DIR=/some/copy/of/prism``
 
-Running ``make test`` is equivalent to calling ``bin/run.sh``.
+Running ``make test`` is equivalent to calling ``bin/run``.
 You can also call this directly, changing the location of PRISM if required:
 
-* ``PRISM_DIR=/some/copy/of/prism bin/run.sh``
+* ``PRISM_DIR=/some/copy/of/prism bin/run``
 
-By default, the ``run.sh`` script runs code in class ``demos.ModelCheckFromFiles``.
+By default, the ``run`` script runs code in class ``demos.ModelCheckFromFiles``.
 You can change this as follows:
 
-* ``PRISM_MAINCLASS=demos.AnotherTest bin/run.sh``
+* ``PRISM_MAINCLASS=demos.AnotherTest bin/run``
 
 You can create your own code in the ``src`` directory and then compile/run it as above.
-Or, have a look at the ``run.sh`` script to see what is needed to connect to PRISM
+Or, have a look at the ``run`` script to see what is needed to connect to PRISM
 from your own separate code/software. Essentially you need to:
 
 * set up the Java classpath to include PRISM's classes
