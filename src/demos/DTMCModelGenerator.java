@@ -51,7 +51,7 @@ import prism.PrismLog;
  * An example class demonstrating how to control PRISM programmatically,
  * through the functions exposed by the class prism.Prism.
  * 
- * This shows how to defined a model programmatically using the {@link prism.ModelGenerator}
+ * This shows how to define a model programmatically using the {@link prism.ModelGenerator}
  * interface - in this case a simple Markov chain model of a random walk. 
  * 
  * See the README for how to link this to PRISM.
