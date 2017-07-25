@@ -78,7 +78,7 @@ public class MDPModelGenerator
 
 			// Create a model generator to specify the model that PRISM should build
 			// (in this case a simple random walk)
-			GridModel modelGen = new GridModel(2);
+			GridModel modelGen = new GridModel(4);
 			
 			// Load the model generator into PRISM,
 			// export the model to a dot file (which triggers its construction)
@@ -88,14 +88,30 @@ public class MDPModelGenerator
 			// Then do some model checking and print the result
 			String[] props = new String[] {
 					"Pmax=?[F \"target\"]",
-					"Pmax=?[F<=10 \"target\"]",
-					"Rmin=?[F \"target\"]"
+					"Rmin=?[F (\"target\"|failed=true)]"
 			};
 			for (String prop : props) {
 				System.out.println(prop + ":");
 				System.out.println(prism.modelCheck(prop).getResult());
 			}
 			
+			// Now check the first property again,
+			// but this time export the optimal strategy ("adversary") too
+			prism.setExportAdv(Prism.EXPORT_ADV_MDP);
+			prism.setExportAdvFilename("adv.tra");
+			System.out.println(prism.modelCheck("Pmax=?[F \"target\"]").getResult());
+			// Also export the MDP states and labels
+			prism.exportStatesToFile(Prism.EXPORT_PLAIN, new File("adv.sta"));
+			prism.exportLabelsToFile(null, Prism.EXPORT_PLAIN, new File("adv.lab"));
+			// Then load it back in, re-verify the property (as a sanity check)
+			// and export the induced model as a dot file
+			// (really, the induced model is a DTMC, but we keep it as an MDP
+			// so that we can see the action labels taken in the optimal strategy)
+			prism.setEngine(Prism.HYBRID);
+			prism.loadModelFromExplicitFiles(new File("adv.sta"), new File("adv.tra"), new File("adv.lab"), null, ModelType.MDP);
+			System.out.println(prism.modelCheck("Pmax=?[F \"target\"]").getResult());
+			prism.exportTransToFile(true, Prism.EXPORT_DOT_STATES, new File("adv.dot"));
+
 			// Close down PRISM
 			prism.closeDown();
 
