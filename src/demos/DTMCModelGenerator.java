@@ -146,7 +146,7 @@ public class DTMCModelGenerator
 			return ModelType.DTMC;
 		}
 
-		// The model's state comprises  one, integer-valued variable, x
+		// The model's state comprises one, integer-valued variable, x
 		
 		@Override
 		public int getNumVars()
