@@ -9,7 +9,7 @@ Browse the example classes in the ``src`` directory to see the example code itse
 
 Download a copy of PRISM and build it
 
-* ``git clone https://github.com/prismmodelchecker/prism-svn prism``
+* ``git clone https://github.com/prismmodelchecker/prism prism``
 * ``cd prism/prism``
 * ``make``
 
