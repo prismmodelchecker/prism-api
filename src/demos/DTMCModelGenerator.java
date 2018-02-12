@@ -76,7 +76,7 @@ public class DTMCModelGenerator
 
 			// Create a model generator to specify the model that PRISM should build
 			// (in this case a simple random walk)
-			RandomWalk modelGen = new RandomWalk(5, 0.6);
+			RandomWalk modelGen = new RandomWalk(5, 0.5);
 			
 			// Load the model generator into PRISM,
 			// export the model to a dot file (which triggers its construction)
