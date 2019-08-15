@@ -38,7 +38,7 @@ import parser.ast.DeclarationInt;
 import parser.ast.Expression;
 import parser.type.Type;
 import parser.type.TypeInt;
-import prism.DefaultModelGenerator;
+import prism.ModelGenerator;
 import prism.ModelType;
 import prism.Prism;
 import prism.PrismDevNullLog;
@@ -46,6 +46,7 @@ import prism.PrismException;
 import prism.PrismFileLog;
 import prism.PrismLangException;
 import prism.PrismLog;
+import prism.RewardGenerator;
 
 /**
  * An example class demonstrating how to control PRISM programmatically,
@@ -114,7 +115,7 @@ public class DTMCModelGenerator
 	 * and the probability of incrementing, rather than decrementing,
 	 * the value is p (n and p are both parameters). 
 	 */
-	class RandomWalk extends DefaultModelGenerator
+	class RandomWalk implements ModelGenerator, RewardGenerator
 	{
 		// Size of walk (state x is in [-n,...,n])
 		private int n;
@@ -149,12 +150,6 @@ public class DTMCModelGenerator
 		// The model's state comprises one, integer-valued variable, x
 		
 		@Override
-		public int getNumVars()
-		{
-			return 1;
-		}
-
-		@Override
 		public List<String> getVarNames()
 		{
 			return Arrays.asList("x");
@@ -169,28 +164,12 @@ public class DTMCModelGenerator
 		// There are three labels: "end", "left" and "right" (x=-n|x=n, x=-n, x=n, respectively)
 		
 		@Override
-		public int getNumLabels()
-		{
-			return 3;
-		};
-
-		@Override
 		public List<String> getLabelNames()
 		{
 			return Arrays.asList("end", "left", "right");
 		}
 		
-		// There is a single reward structure, r, which just assigns reward 1 to every state.
-		// We can use this to reason about the expected number of steps that occur through the random walk. 
-		
-		@Override
-		public List<String> getRewardStructNames()
-		{
-			return Arrays.asList("r");
-		}
-		
-		
-		// Methods for ModelGenerator (rather than superclass ModelInfo) interface
+		// Methods for ModelGenerator interface (rather than superclass ModelInfo)
 
 		@Override
 		public State getInitialState() throws PrismException
@@ -209,12 +188,6 @@ public class DTMCModelGenerator
 		}
 
 		@Override
-		public State getExploreState()
-		{
-			return exploreState;
-		}
-
-		@Override
 		public int getNumChoices() throws PrismException
 		{
 			// This is a DTMC so always exactly one nondeterministic choice (i.e. no nondeterminism)
@@ -225,14 +198,8 @@ public class DTMCModelGenerator
 		public int getNumTransitions(int i) throws PrismException
 		{
 			// End points have a self-loop, all other states have 2 transitions, left and right
+			// (Note that i will always be 0 since this is a Markov chain) 
 			return (x == -n || x == n) ? 1 : 2;
-		}
-
-		@Override
-		public Object getTransitionAction(int i) throws PrismException
-		{
-			// No action labels in this model
-			return null;
 		}
 
 		@Override
@@ -286,6 +253,17 @@ public class DTMCModelGenerator
 			return false;
 		}
 
+		// Methods for RewardGenerator interface (reward info stored separately from ModelInfo/ModelGenerator)
+		
+		// There is a single reward structure, r, which just assigns reward 1 to every state.
+		// We can use this to reason about the expected number of steps that occur through the random walk. 
+		
+		@Override
+		public List<String> getRewardStructNames()
+		{
+			return Arrays.asList("r");
+		}
+		
 		@Override
 		public double getStateReward(int r, State state) throws PrismException
 		{

@@ -166,12 +166,6 @@ public class MDPModelGenerator
 		// indicating current grid coordinates, and a boolean, failed, indicating a failure state. 
 		
 		@Override
-		public int getNumVars()
-		{
-			return 3;
-		}
-
-		@Override
 		public List<String> getVarNames()
 		{
 			return Arrays.asList("x", "y", "failed");
@@ -186,28 +180,12 @@ public class MDPModelGenerator
 		// There is just one label: "goal" (top-right corner)
 		
 		@Override
-		public int getNumLabels()
-		{
-			return 1;
-		};
-
-		@Override
 		public List<String> getLabelNames()
 		{
 			return Arrays.asList("target");
 		}
 		
-		// There is a single reward structure, r, which just assigns reward 1 to every transition.
-		// We can use this to reason about the expected number of steps taken through the grid. 
-		
-		@Override
-		public List<String> getRewardStructNames()
-		{
-			return Arrays.asList("r");
-		}
-		
-		
-		// Methods for ModelGenerator (rather than superclass ModelInfo) interface
+		// Methods for ModelGenerator interface (rather than superclass ModelInfo)
 
 		@Override
 		public State getInitialState() throws PrismException
@@ -228,12 +206,6 @@ public class MDPModelGenerator
 		}
 
 		@Override
-		public State getExploreState()
-		{
-			return exploreState;
-		}
-
-		@Override
 		public int getNumChoices() throws PrismException
 		{
 			// All 4 actions ("north", "east", "south", "west") are always available
@@ -246,13 +218,6 @@ public class MDPModelGenerator
 			// Usually 2 transitions (non-failure, failure)
 			// unless we have already failed, in which case there is just 1 
 			return failed ? 1 : 2;
-		}
-
-		@Override
-		public Object getTransitionAction(int i) throws PrismException
-		{
-			// Action labels are the same in every state
-			return actions[i];
 		}
 
 		@Override
@@ -333,6 +298,18 @@ public class MDPModelGenerator
 			}
 		}
 
+		// Methods for RewardGenerator interface (reward info stored separately from ModelInfo/ModelGenerator)
+		
+		// There is a single reward structure, r, which just assigns reward 1 to every transition.
+		// We can use this to reason about the expected number of steps taken through the grid. 
+		
+		@Override
+		public List<String> getRewardStructNames()
+		{
+			return Arrays.asList("r");
+		}
+		
+		
 		@Override
 		public double getStateReward(int r, State state) throws PrismException
 		{
