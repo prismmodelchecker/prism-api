@@ -50,3 +50,16 @@ from your own separate code/software. Essentially you need to:
 The script also takes care of an issue with recent Macs where ``DYLD_LIBRARY_PATH``
 is not read when the ``java`` binary is a symlink.
 
+
+## Versioning
+
+The `prism-api` repo is generally kept in synch with the master branch of
+the main `prism` repo in terms of any changes made to the API.
+If you want to roll back to an old version of PRISM, you can, for example, do:
+
+* ``git checkout v4.5``
+
+after each of the `git clone` instructions above. This switches to the `v4.5` release of PRISM
+and to a matching branch on `prism-api`, which should be the latest version known to work
+with that release.
+
