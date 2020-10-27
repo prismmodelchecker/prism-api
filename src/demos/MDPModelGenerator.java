@@ -36,6 +36,7 @@ import parser.VarList;
 import parser.ast.Declaration;
 import parser.ast.DeclarationBool;
 import parser.ast.DeclarationInt;
+import parser.ast.DeclarationType;
 import parser.ast.Expression;
 import parser.type.Type;
 import parser.type.TypeBool;
@@ -177,6 +178,20 @@ public class MDPModelGenerator
 			return Arrays.asList(TypeInt.getInstance(), TypeInt.getInstance(), TypeBool.getInstance());
 		}
 
+		@Override
+		public DeclarationType getVarDeclarationType(int i) throws PrismException
+		{
+			switch (i) {
+			// x or y have finite range, so give a declaration
+			case 0:
+			case 1:
+				return new DeclarationInt(Expression.Int(1), Expression.Int(n));
+			// for anything else (actually, just "failed"), use a default
+			default:
+				return super.getVarDeclarationType(i);
+			}
+		}
+		
 		// There is just one label: "goal" (top-right corner)
 		
 		@Override
@@ -323,20 +338,6 @@ public class MDPModelGenerator
 			// r will only ever be 0 (because there is one reward structure)
 			// We assume it assigns 1 to all transitions.
 			return 1.0;
-		}
-		
-		@Override
-		public VarList createVarList()
-		{
-			// Need to give the variable list containing the declaration of variable x 
-			VarList varList = new VarList();
-			try {
-				varList.addVar(new Declaration("x", new DeclarationInt(Expression.Int(1), Expression.Int(n))), 0, null);
-				varList.addVar(new Declaration("y", new DeclarationInt(Expression.Int(1), Expression.Int(n))), 0, null);
-				varList.addVar(new Declaration("failed", new DeclarationBool()), 0, null);
-			} catch (PrismLangException e) {
-			}
-			return varList;
 		}
 	}
 }
