@@ -35,6 +35,7 @@ import parser.State;
 import parser.VarList;
 import parser.ast.Declaration;
 import parser.ast.DeclarationInt;
+import parser.ast.DeclarationType;
 import parser.ast.Expression;
 import parser.type.Type;
 import parser.type.TypeInt;
@@ -43,7 +44,6 @@ import prism.ModelType;
 import prism.Prism;
 import prism.PrismDevNullLog;
 import prism.PrismException;
-import prism.PrismFileLog;
 import prism.PrismLangException;
 import prism.PrismLog;
 import prism.RewardGenerator;
@@ -147,7 +147,7 @@ public class DTMCModelGenerator
 			return ModelType.DTMC;
 		}
 
-		// The model's state comprises one, integer-valued variable, x
+		// The model's state comprises one, integer-valued variable x with range -n to +n
 		
 		@Override
 		public List<String> getVarNames()
@@ -159,6 +159,13 @@ public class DTMCModelGenerator
 		public List<Type> getVarTypes()
 		{
 			return Arrays.asList(TypeInt.getInstance());
+		}
+
+		@Override
+		public DeclarationType getVarDeclarationType(int i)
+		{
+			// i will always be 0 since there there is only one variable x
+			return new DeclarationInt(Expression.Int(-n), Expression.Int(n));
 		}
 
 		// There are three labels: "end", "left" and "right" (x=-n|x=n, x=-n, x=n, respectively)
@@ -277,18 +284,6 @@ public class DTMCModelGenerator
 		{
 			// No action rewards
 			return 0.0;
-		}
-		
-		@Override
-		public VarList createVarList()
-		{
-			// Need to give the variable list containing the declaration of variable x 
-			VarList varList = new VarList();
-			try {
-				varList.addVar(new Declaration("x", new DeclarationInt(Expression.Int(-n), Expression.Int(n))), 0, null);
-			} catch (PrismLangException e) {
-			}
-			return varList;
 		}
 	}
 }
