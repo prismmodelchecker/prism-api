@@ -50,6 +50,9 @@ from your own separate code/software. Essentially you need to:
 The script also takes care of an issue with recent Macs where ``DYLD_LIBRARY_PATH``
 is not read when the ``java`` binary is a symlink.
 
+There is also a ``run-cygwin`` script in the ``bin`` directory for use on Cygwin under Windows.
+This needs a different format for the classpath and environment variables.
+
 
 ## Versioning
 
