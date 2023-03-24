@@ -85,8 +85,8 @@ public class ModelCheckFromFiles
 			List<String> consts = propertiesFile.getUndefinedConstantsUsedInProperty(propertiesFile.getPropertyObject(1));
 			String constName = consts.get(0);
 			Values vals = new Values();
-			vals.addValue(constName, new Integer(3));
-			propertiesFile.setUndefinedConstants(vals);
+			vals.addValue(constName, Integer.valueOf(3));
+			propertiesFile.setSomeUndefinedConstants(vals);
 			System.out.println(propertiesFile.getPropertyObject(1) + " for " + vals);
 			result = prism.modelCheck(propertiesFile, propertiesFile.getPropertyObject(1));
 			System.out.println(result.getResult());
@@ -98,7 +98,7 @@ public class ModelCheckFromFiles
 			int n = undefConsts.getNumPropertyIterations();
 			for (int i = 0; i < n; i++) {
 				Values valsExpt = undefConsts.getPFConstantValues();
-				propertiesFile.setUndefinedConstants(valsExpt);
+				propertiesFile.setSomeUndefinedConstants(valsExpt);
 				System.out.println(propertiesFile.getPropertyObject(1) + " for " + valsExpt);
 				result = prism.modelCheck(propertiesFile, propertiesFile.getPropertyObject(1));
 				System.out.println(result.getResult());
