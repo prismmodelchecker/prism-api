@@ -32,9 +32,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import parser.State;
-import parser.VarList;
-import parser.ast.Declaration;
-import parser.ast.DeclarationBool;
 import parser.ast.DeclarationInt;
 import parser.ast.DeclarationType;
 import parser.ast.Expression;
@@ -46,8 +43,6 @@ import prism.ModelType;
 import prism.Prism;
 import prism.PrismDevNullLog;
 import prism.PrismException;
-import prism.PrismFileLog;
-import prism.PrismLangException;
 import prism.PrismLog;
 
 /**
@@ -243,7 +238,7 @@ public class MDPModelGenerator
 		}
 
 		@Override
-		public double getTransitionProbability(int i, int offset) throws PrismException
+		public Double getTransitionProbability(int i, int offset) throws PrismException
 		{
 			// If we have already failed, there is just one transition
 			// (a self-loop) and this occurs with probability 1
@@ -326,14 +321,14 @@ public class MDPModelGenerator
 		
 		
 		@Override
-		public double getStateReward(int r, State state) throws PrismException
+		public Double getStateReward(int r, State state) throws PrismException
 		{
 			// No state rewards 
 			return 0.0;
 		}
 		
 		@Override
-		public double getStateActionReward(int r, State state, Object action) throws PrismException
+		public Double getStateActionReward(int r, State state, Object action) throws PrismException
 		{
 			// r will only ever be 0 (because there is one reward structure)
 			// We assume it assigns 1 to all transitions.

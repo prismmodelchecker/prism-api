@@ -32,8 +32,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import parser.State;
-import parser.VarList;
-import parser.ast.Declaration;
 import parser.ast.DeclarationInt;
 import parser.ast.DeclarationType;
 import parser.ast.Expression;
@@ -44,7 +42,6 @@ import prism.ModelType;
 import prism.Prism;
 import prism.PrismDevNullLog;
 import prism.PrismException;
-import prism.PrismLangException;
 import prism.PrismLog;
 import prism.RewardGenerator;
 
@@ -115,7 +112,7 @@ public class DTMCModelGenerator
 	 * and the probability of incrementing, rather than decrementing,
 	 * the value is p (n and p are both parameters). 
 	 */
-	class RandomWalk implements ModelGenerator, RewardGenerator
+	class RandomWalk implements ModelGenerator<Double>, RewardGenerator<Double>
 	{
 		// Size of walk (state x is in [-n,...,n])
 		private int n;
@@ -217,7 +214,7 @@ public class DTMCModelGenerator
 		}
 
 		@Override
-		public double getTransitionProbability(int i, int offset) throws PrismException
+		public Double getTransitionProbability(int i, int offset) throws PrismException
 		{
 			// End points have a self-loop (with probability 1)
 			// All other states go left with probability 1-p and right with probability p
@@ -272,7 +269,7 @@ public class DTMCModelGenerator
 		}
 		
 		@Override
-		public double getStateReward(int r, State state) throws PrismException
+		public Double getStateReward(int r, State state) throws PrismException
 		{
 			// r will only ever be 0 (because there is one reward structure)
 			// We assume it assigns 1 to all states.
@@ -280,7 +277,7 @@ public class DTMCModelGenerator
 		}
 		
 		@Override
-		public double getStateActionReward(int r, State state, Object action) throws PrismException
+		public Double getStateActionReward(int r, State state, Object action) throws PrismException
 		{
 			// No action rewards
 			return 0.0;
